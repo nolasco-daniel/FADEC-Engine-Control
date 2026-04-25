@@ -97,10 +97,28 @@ This project presents a futuristic aircraft engine monitoring interface with:
 
 ---
 
+## Project Structure
+
+- `src/index.html` - layout shell and script loading order
+- `src/css/styles.css` - all visual styling and layout rules
+- `src/js/fadec-state.js` - shared app state and defaults
+- `src/js/fadec-engine.js` - FADEC computation and decision logic
+- `src/js/fadec-ui.js` - DOM rendering and display updates
+- `src/js/fadec-canvas.js` - fuel map canvas drawing
+- `src/js/fadec-events.js` - slider, reset, and timer wiring
+- `src/js/main.js` - bootstrap entrypoint
+- `assets/` - static assets placeholder
+- `docs/` - documentation placeholder
+- `tests/` - test placeholder
+- `lib/` - vendor or external library placeholder
+- `config/` - configuration placeholder
+
+---
+
 ## 🚀 How To Run
 
 1. 📂 Open the project folder
-2. 🌐 Double-click `index.html`, or open it in your browser
+2. 🌐 Open `src/index.html` in your browser
 3. 🎛️ Adjust the sliders to simulate different engine conditions
 
 > 💡 **No install or build step required!** This is a static HTML/CSS/JavaScript project.

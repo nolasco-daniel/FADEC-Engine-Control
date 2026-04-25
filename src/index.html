@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FADEC Control Unit — CFM56-7B</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Share+Tech+Mono&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
@@ -227,7 +227,7 @@
         <span class="ph-title">Output / Actuator</span>
         <div style="flex:1"></div>
         <div style="font-family:var(--mono);font-size:8px;color:var(--muted);margin-right:6px;" id="out-mode">EGT NOMINAL</div>
-        <button class="reset-btn" onclick="resetAll()">↺ RESET</button>
+        <button class="reset-btn" id="reset-btn">↺ RESET</button>
       </div>
       <div class="out-inner">
         <!-- Fuel flow number -->
@@ -370,6 +370,11 @@
 
 </div><!-- /main -->
 
-<script src="script.js"></script>
+<script src="js/fadec-state.js"></script>
+<script src="js/fadec-engine.js"></script>
+<script src="js/fadec-canvas.js"></script>
+<script src="js/fadec-ui.js"></script>
+<script src="js/fadec-events.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>
