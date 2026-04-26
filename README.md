@@ -1,3 +1,7 @@
+
+STATIC
+
+
 # 🛩️ FADEC Control Unit - CFM56-7B
 
 > A browser-based interactive dashboard that simulates a **FADEC** (Full Authority Digital Engine Control) control panel for a CFM56-7B aircraft engine. It uses live sliders, calculated outputs, a fuel-map canvas, and status indicators to show how sensor inputs affect engine behavior.
