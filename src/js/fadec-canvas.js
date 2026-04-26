@@ -1,5 +1,9 @@
 (function () {
-  function drawFuelMap(n1, wf) {
+  function clamp(value, min, max) {
+    return Math.min(max, Math.max(min, value));
+  }
+
+  function drawFuelMap(throttle, wf) {
     const canvas = document.getElementById('fuel-map-canvas');
     if (!canvas) return;
 
@@ -28,6 +32,8 @@
       ctx.stroke();
     }
 
+    const maxWf = 60;
+
     ctx.font = '8px "Share Tech Mono"';
     ctx.fillStyle = 'rgba(0,229,255,0.35)';
     ctx.textAlign = 'center';
@@ -36,8 +42,18 @@
     }
     ctx.textAlign = 'right';
     for (let i = 0; i <= 5; i++) {
-      ctx.fillText((i * 1.2).toFixed(1), pad.l - 4, pad.t + ch - (i / 5) * ch + 3);
+      ctx.fillText((i * (maxWf / 5)).toFixed(1), pad.l - 4, pad.t + ch - (i / 5) * ch + 3);
     }
+
+    ctx.save();
+    ctx.font = '8px "Share Tech Mono"';
+    ctx.fillStyle = 'rgba(0,229,255,0.22)';
+    ctx.textAlign = 'center';
+    ctx.fillText('Throttle %', pad.l + cw / 2, H - 6);
+    ctx.translate(10, pad.t + ch / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText('Fuel flow (kg/s)', 0, 0);
+    ctx.restore();
 
     ctx.beginPath();
     ctx.strokeStyle = 'rgba(0,229,255,0.6)';
@@ -49,8 +65,10 @@
     ctx.stroke();
     ctx.shadowBlur = 0;
 
-    const px = pad.l + (n1 / 100) * cw;
-    const py = pad.t + ch - (n1 / 100) * ch;
+    const x = clamp(throttle, 0, 100);
+    const y = clamp(Number(wf), 0, maxWf);
+    const px = pad.l + (x / 100) * cw;
+    const py = pad.t + ch - (y / maxWf) * ch;
 
     ctx.strokeStyle = 'rgba(0,229,255,0.25)';
     ctx.lineWidth = 0.8;
@@ -65,7 +83,7 @@
     ctx.stroke();
     ctx.setLineDash([]);
 
-    ctx.fillStyle = 'var(--cyan)';
+    ctx.fillStyle = '#00e5ff';
     ctx.shadowColor = 'rgba(0,229,255,0.8)';
     ctx.shadowBlur = 10;
     ctx.beginPath();

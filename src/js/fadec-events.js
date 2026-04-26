@@ -38,7 +38,7 @@
     setInterval(UI.updateClock, 1000);
     setInterval(() => {
       const noise = (Math.random() - 0.5) * 0.5;
-      Canvas.drawFuelMap(Math.round(State.n1Actual / 85), ((State.wa + noise) / 15).toFixed(2));
+      Canvas.drawFuelMap(State.throttle, (State.wa + noise) / 15);
     }, 800);
     setInterval(() => {
       const messages = State.logs;

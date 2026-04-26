@@ -196,13 +196,13 @@
       : '→ "Engine Stable. Fuel Flow optimized."';
     $('code-result').style.color = overtemp ? 'var(--red)' : 'var(--green2)';
 
-    $('map-n1').textContent = `${n1Pct}%`;
+    $('map-throttle').textContent = `${State.throttle}%`;
     $('map-wf').textContent = `${wf.toFixed(2)} kg/s`;
 
     $('out-mode').textContent = overtemp ? 'TEMP OVER LIMIT' : hightemp ? 'TEMP CAUTION' : 'TEMP NOMINAL';
     $('out-mode').style.color = overtemp ? 'var(--red)' : hightemp ? 'var(--amber)' : 'var(--muted)';
 
-    Canvas.drawFuelMap(n1Pct, wf.toFixed(2));
+    Canvas.drawFuelMap(State.throttle, wf);
   }
 
   window.FadecUI = {
