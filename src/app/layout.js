@@ -9,6 +9,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        <link
+          rel="icon"
+          type="image/png"
+          href="https://res.cloudinary.com/dphvhssec/image/upload/v1777546379/Screenshot_2026-04-30_185537-removebg-preview_cuwzb2.png"
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
