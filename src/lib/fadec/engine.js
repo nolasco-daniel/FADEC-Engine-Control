@@ -1,8 +1,10 @@
-(function () {
-  const State = window.FadecState;
+export class FadecEngine {
+  clamp(value, min, max) {
+    return Math.min(max, Math.max(min, value));
+  }
 
-  function compute() {
-    const { wa, tamb, throttle, n1Actual } = State;
+  compute(state) {
+    const { wa, tamb, throttle, n1Actual } = state;
 
     const targetN1 = throttle > 50 ? 5000 : Math.round(throttle * 85);
     const n1Low = n1Actual < targetN1;
@@ -19,8 +21,8 @@
     const valvePct = overtemp
       ? 0
       : n1Low
-      ? Math.min(100, Math.round((wa / 900) * 100))
-      : Math.round((wa / 900) * 60);
+        ? Math.min(100, Math.round((wa / 900) * 100))
+        : Math.round((wa / 900) * 60);
     const eff = overtemp ? 0 : (92 + Math.random() * 4).toFixed(1);
 
     return {
@@ -39,6 +41,4 @@
       eff,
     };
   }
-
-  window.FadecEngine = { compute };
-})();
+}

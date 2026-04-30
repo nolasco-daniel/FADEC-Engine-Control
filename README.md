@@ -103,29 +103,33 @@ This project presents a futuristic aircraft engine monitoring interface with:
 
 ## Project Structure
 
-- `src/index.html` - layout shell and script loading order
-- `src/css/styles.css` - all visual styling and layout rules
-- `src/js/fadec-state.js` - shared app state and defaults
-- `src/js/fadec-engine.js` - FADEC computation and decision logic
-- `src/js/fadec-ui.js` - DOM rendering and display updates
-- `src/js/fadec-canvas.js` - fuel map canvas drawing
-- `src/js/fadec-events.js` - slider, reset, and timer wiring
-- `src/js/main.js` - bootstrap entrypoint
-- `assets/` - static assets placeholder
-- `docs/` - documentation placeholder
-- `tests/` - test placeholder
-- `lib/` - vendor or external library placeholder
-- `config/` - configuration placeholder
+- `src/app/page.js` - thin route entry that renders the dashboard
+- `src/app/layout.js` - root HTML shell and font loading
+- `src/styles/globals.css` - global styles for the cockpit UI
+- `src/components/fadec/FadecDashboard.jsx` - main dashboard composer
+- `src/components/fadec/panels/` - top bar, panels, and layout sections
+- `src/components/fadec/ui/` - reusable UI atoms such as headers and rows
+- `src/hooks/useFadecController.js` - controller logic, timers, and state wiring
+- `src/lib/fadec/constants.js` - defaults and log messages
+- `src/lib/fadec/state.js` - OOP model for the FADEC state
+- `src/lib/fadec/engine.js` - FADEC calculation engine
+- `src/lib/fadec/canvas.js` - canvas renderer for the fuel map
+- `src/lib/fadec/index.js` - clean export surface for the FADEC module
+- `public/` - add static assets here if needed
 
 ---
 
 ## 🚀 How To Run
 
 1. 📂 Open the project folder
-2. 🌐 Open `src/index.html` in your browser
-3. 🎛️ Adjust the sliders to simulate different engine conditions
+2. Install dependencies with `npm install`
+3. Run the dev server with `npm run dev`
+4. Open the local URL shown in the terminal
 
-> 💡 **No install or build step required!** This is a static HTML/CSS/JavaScript project.
+For deployment:
+
+1. Run `npm run build`
+2. Deploy the Next.js app to Vercel or your preferred Node host
 
 ---
 

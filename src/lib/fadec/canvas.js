@@ -1,10 +1,9 @@
-(function () {
-  function clamp(value, min, max) {
+export class FuelMapRenderer {
+  clamp(value, min, max) {
     return Math.min(max, Math.max(min, value));
   }
 
-  function drawFuelMap(throttle, wf) {
-    const canvas = document.getElementById('fuel-map-canvas');
+  draw(canvas, throttle, wf) {
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
@@ -19,7 +18,7 @@
 
     ctx.strokeStyle = 'rgba(0,229,255,0.08)';
     ctx.lineWidth = 1;
-    for (let i = 0; i <= 5; i++) {
+    for (let i = 0; i <= 5; i += 1) {
       const x = pad.l + (i / 5) * cw;
       const y = pad.t + (i / 5) * ch;
       ctx.beginPath();
@@ -37,11 +36,11 @@
     ctx.font = '8px "Share Tech Mono"';
     ctx.fillStyle = 'rgba(0,229,255,0.35)';
     ctx.textAlign = 'center';
-    for (let i = 0; i <= 5; i++) {
+    for (let i = 0; i <= 5; i += 1) {
       ctx.fillText(i * 20, pad.l + (i / 5) * cw, pad.t + ch + 14);
     }
     ctx.textAlign = 'right';
-    for (let i = 0; i <= 5; i++) {
+    for (let i = 0; i <= 5; i += 1) {
       ctx.fillText((i * (maxWf / 5)).toFixed(1), pad.l - 4, pad.t + ch - (i / 5) * ch + 3);
     }
 
@@ -65,8 +64,8 @@
     ctx.stroke();
     ctx.shadowBlur = 0;
 
-    const x = clamp(throttle, 0, 100);
-    const y = clamp(Number(wf), 0, maxWf);
+    const x = this.clamp(throttle, 0, 100);
+    const y = this.clamp(Number(wf), 0, maxWf);
     const px = pad.l + (x / 100) * cw;
     const py = pad.t + ch - (y / maxWf) * ch;
 
@@ -91,6 +90,4 @@
     ctx.fill();
     ctx.shadowBlur = 0;
   }
-
-  window.FadecCanvas = { drawFuelMap };
-})();
+}
