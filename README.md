@@ -66,57 +66,39 @@ This project presents a futuristic aircraft engine monitoring interface with:
 
 ## File Structure
 
+| Area | What It Handles | Key Files |
+|---|---|---|
+| `app` | Next.js route shell and home entry | `src/app/layout.js`, `src/app/page.js` |
+| `components/fadec` | Main cockpit UI composition | `src/components/fadec/FadecDashboard.jsx`, `src/components/fadec/index.js` |
+| `components/fadec/panels` | Dashboard sections and screen blocks | `AlgorithmPanel.jsx`, `CodePanel.jsx`, `DiagnosticsLog.jsx`, `FeedbackPanel.jsx`, `HardwarePanel.jsx`, `OutputPanel.jsx`, `SensorsPanel.jsx`, `SubNav.jsx`, `TopBar.jsx` |
+| `components/fadec/ui` | Reusable UI atoms and small building blocks | `FeedbackStep.jsx`, `HardwareItem.jsx`, `PanelHeader.jsx`, `SensorBlock.jsx`, `StatRow.jsx` |
+| `hooks` | State, timers, and animation control | `src/hooks/useFadecController.js` |
+| `lib/fadec` | Core FADEC logic and helpers | `canvas.js`, `constants.js`, `engine.js`, `format.js`, `index.js`, `state.js` |
+| `styles` | Global cockpit theme and responsiveness | `src/styles/globals.css` |
+
+### Architecture View
+
 ```text
-src/
-  app/                     # Next.js route shell and the home page entry
-    layout.js              # Global HTML layout, metadata, and font loading
-    page.js                # Home route that renders the FADEC dashboard
-  components/
-    fadec/                 # Main dashboard UI and reusable panels
-      FadecDashboard.jsx   # Composes the full FADEC cockpit screen
-      index.js             # Barrel export for fadec components
-      panels/              # Individual dashboard sections
-        AlgorithmPanel.jsx # Fuel formula, target N1, and algorithm status
-        CodePanel.jsx      # CBT-style code preview for the logic
-        DiagnosticsLog.jsx # Live scrolling log and reset button
-        FeedbackPanel.jsx  # Feedback loop and decision gate
-        HardwarePanel.jsx  # ECU, sensor, and actuator concept cards
-        OutputPanel.jsx    # Fuel output, valve, and engine status readout
-        SensorsPanel.jsx   # Inputs for Wa, Tamb, throttle, and N1
-        SubNav.jsx         # Navigation strip under the top bar
-        TopBar.jsx         # Main header with system state and clock
-        index.js           # Barrel export for panel components
-      ui/                  # Small reusable UI building blocks
-        FeedbackStep.jsx   # Single step in the feedback loop
-        HardwareItem.jsx   # One hardware concept card
-        PanelHeader.jsx    # Reusable section header
-        SensorBlock.jsx    # Sensor input card with slider
-        StatRow.jsx        # One-line status/value row
-        index.js           # Barrel export for UI atoms
-  hooks/                   # React hooks for state and animation logic
-    useFadecController.js  # State, timers, canvas drawing, and updates
-  lib/                     # Core FADEC logic and helpers
-    fadec/
-      canvas.js            # Canvas renderer for the throttle-to-fuel map
-      constants.js         # Default values and log messages
-      engine.js            # Main FADEC computation engine
-      format.js            # Shared deterministic number formatting
-      index.js             # Barrel export for FADEC helpers
-      state.js             # FADEC state model and reset/snapshot logic
-  styles/                  # Global app styling
-    globals.css            # Full cockpit-style theme and layout styles
+src
+├─ app
+│  ├─ layout.js      # document shell, metadata, fonts
+│  └─ page.js        # route entry that renders the dashboard
+├─ components
+│  └─ fadec
+│     ├─ FadecDashboard.jsx
+│     ├─ panels
+│     └─ ui
+├─ hooks
+│  └─ useFadecController.js
+├─ lib
+│  └─ fadec
+│     ├─ engine.js   # FADEC computation engine
+│     ├─ canvas.js   # fuel-map renderer
+│     ├─ format.js   # stable number formatting
+│     └─ state.js
+└─ styles
+   └─ globals.css    # cockpit theme, layout, responsiveness
 ```
-
-Key files:
-
-- `src/app/page.js` - route entry that renders the dashboard
-- `src/app/layout.js` - root HTML shell and font loading
-- `src/components/fadec/FadecDashboard.jsx` - main dashboard composer
-- `src/hooks/useFadecController.js` - controller logic, timers, and state wiring
-- `src/lib/fadec/engine.js` - FADEC calculation engine
-- `src/lib/fadec/canvas.js` - canvas renderer for the fuel map
-- `src/lib/fadec/format.js` - shared deterministic formatting helpers
-- `src/styles/globals.css` - global styles for the cockpit UI
 
 ## How To Run
 
@@ -126,8 +108,3 @@ Key files:
 4. Open the local URL shown in the terminal
 
 
-## Notes
-
-- The interface is designed to look like a cockpit or diagnostic panel
-- The project is intended for demonstration, simulation, or academic presentation
-- The current implementation has been verified with a successful production build
