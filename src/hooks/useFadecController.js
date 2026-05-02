@@ -52,7 +52,7 @@ export function useFadecController() {
   useEffect(() => {
     const timer = setInterval(() => {
       const noise = (Math.random() - 0.5) * 0.5;
-      renderer.draw(canvasRef.current, state.throttle, computed.overtemp ? 0 : (state.wa + noise) / 15);
+      renderer.draw(canvasRef.current, state.throttle, computed.overtemp ? computed.wf : (state.wa + noise) / 15);
     }, 800);
 
     return () => clearInterval(timer);

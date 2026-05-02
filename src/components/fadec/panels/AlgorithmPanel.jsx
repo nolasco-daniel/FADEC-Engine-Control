@@ -59,7 +59,7 @@ export function AlgorithmPanel({ computed, state }) {
           </div>
           <div className="astat">
             <div className="astat-val" id="algo-mode">
-              {computed.overtemp ? 'FAULT' : state.throttle === 0 ? 'IDLE' : 'AUTO'}
+              {computed.overtemp ? 'FAULT' : state.throttle <= 50 ? 'STANDBY' : 'AUTO'}
             </div>
             <div className="astat-lbl">Op. Status</div>
           </div>

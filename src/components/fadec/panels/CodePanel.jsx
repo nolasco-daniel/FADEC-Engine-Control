@@ -2,26 +2,43 @@ import { PanelHeader } from '../ui/index.js';
 
 export function CodePanel({ computed }) {
   return (
-    <div className="panel" style={{ flexShrink: 0 }}>
-      <PanelHeader icon="CODE" title="CBT Code (Python)" badge="LIVE" />
-      <div style={{ padding: 8, fontFamily: 'var(--mono)', fontSize: 9, lineHeight: 1.7, color: 'rgba(150,200,210,0.7)' }}>
-        <span style={{ color: '#546e7a' }}># FADEC fuel schedule logic</span>
+    <div className="panel code-panel" style={{ flexShrink: 0 }}>
+      <PanelHeader icon="CODE" title="CBT Code (JavaScript Logic)" badge="LIVE" />
+      <div style={{ padding: 8, fontFamily: 'var(--mono)', fontSize: 9, lineHeight: 1.7 }}>
+        <span className="token-comment">{'// FADEC fuel schedule logic'}</span>
         <br />
-        <span style={{ color: '#c792ea' }}>if</span> <span>current_temp</span> <span style={{ color: 'var(--cyan)' }}>{'>'}</span>{' '}
-        <span style={{ color: '#f78c6c' }}>max_temp</span>
-        <span style={{ color: 'var(--cyan)' }}>:</span>
+        <span className="token-keyword">const</span> <span>targetN1</span> <span className="token-operator">=</span>{' '}
+        <span>throttle</span> <span className="token-operator">{'>'}</span> <span className="token-number">50</span>{' '}
+        <span className="token-operator">?</span> <span className="token-number">5000</span> <span className="token-operator">:</span>{' '}
+        <span className="token-number">0</span>
         <br />
-        &nbsp;&nbsp;fuel_flow <span style={{ color: 'var(--cyan)' }}>=</span> fuel_flow <span style={{ color: 'var(--cyan)' }}>*</span>{' '}
-        <span style={{ color: '#f78c6c' }}>0.0</span>
+        <span className="token-keyword">const</span> <span>fuelFlow</span> <span className="token-operator">=</span> <span>airVolume</span>{' '}
+        <span className="token-operator">/</span> <span className="token-number">15</span>
         <br />
-        <span style={{ color: '#c792ea' }}>else</span>
-        <span style={{ color: 'var(--cyan)' }}>:</span>
+        <span className="token-keyword">const</span> <span>valveCmd</span> <span className="token-operator">=</span> <span>overtemp</span>{' '}
+        <span className="token-operator">?</span> <span className="token-string">'REDUCE'</span>{' '}
+        <span className="token-operator">:</span> <span>targetN1</span> <span className="token-operator">===</span>{' '}
+        <span className="token-number">0</span> <span className="token-operator">?</span> <span className="token-string">'HOLD'</span>{' '}
+        <span className="token-operator">:</span> <span>actualN1</span> <span className="token-operator">{'<'}</span>{' '}
+        <span>targetN1</span> <span className="token-operator">?</span> <span className="token-string">'OPEN'</span>{' '}
+        <span className="token-operator">:</span> <span>actualN1</span> <span className="token-operator">{'>'}</span>{' '}
+        <span>targetN1</span> <span className="token-operator">?</span> <span className="token-string">'CLOSE'</span>{' '}
+        <span className="token-operator">:</span> <span className="token-string">'HOLD'</span>
         <br />
-        &nbsp;&nbsp;fuel_flow <span style={{ color: 'var(--cyan)' }}>=</span> air_volume <span style={{ color: 'var(--cyan)' }}>/</span>{' '}
-        <span style={{ color: '#f78c6c' }}>15</span>
+        <span className="token-keyword">if</span> <span>current_temp</span> <span className="token-operator">{'>'}</span>{' '}
+        <span className="token-number">max_temp</span>
+        <span className="token-operator">:</span>
         <br />
-        <span style={{ color: 'var(--green2)' }}>
-          {computed.overtemp ? '-> "FADEC WARNING: Reducing fuel to prevent melt-down!"' : '-> "Engine Stable. Fuel Flow optimized."'}
+        &nbsp;&nbsp;adjustedFuelFlow <span className="token-operator">=</span> fuelFlow <span className="token-operator">*</span>{' '}
+        <span className="token-number">0.8</span>
+        <br />
+        <span className="token-keyword">else</span>
+        <span className="token-operator">:</span>
+        <br />
+        &nbsp;&nbsp;adjustedFuelFlow <span className="token-operator">=</span> fuelFlow
+        <br />
+        <span className="token-success">
+          {computed.overtemp ? '-> "FADEC WARNING: Reducing fuel flow to prevent melt-down!"' : '-> "Engine Stable. Fuel Flow optimized."'}
         </span>
       </div>
     </div>

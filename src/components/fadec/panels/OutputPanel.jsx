@@ -2,8 +2,14 @@ import { PanelHeader, StatRow } from '../ui/index.js';
 
 export function OutputPanel({ computed, n1Percent, state }) {
   return (
-    <div className="panel" id="output" style={{ minHeight: 110 }}>
+    <div className={`panel ${computed.overtemp ? 'output-overtemp' : ''}`} id="output" style={{ minHeight: 110 }}>
       <PanelHeader icon="O" title="Output / Actuator" badge="RESET" badgeClass="ph-badge" />
+      {computed.overtemp ? (
+        <div className="output-warning">
+          <div className="output-warning-head">FADEC WARNING</div>
+          <div className="output-warning-sub">EGT OVER LIMIT - REDUCE FUEL FLOW</div>
+        </div>
+      ) : null}
       <div className="out-inner">
         <div className="out-fuel-num">
           <div className="ofn-label">FUEL FLOW</div>
@@ -13,7 +19,7 @@ export function OutputPanel({ computed, n1Percent, state }) {
           <div className="ofn-unit">kg/s</div>
           <div className="ofn-sub">
             {computed.overtemp
-              ? 'Wf = fuel_flow * 0.0 (MELT-DOWN PREVENTION)'
+              ? 'Wf = fuel_flow * 0.8 (REDUCING FUEL TO PREVENT MELT-DOWN)'
               : `Wf = ${state.wa} / 15 = ${computed.wfRaw.toFixed(3)} kg/s`}
           </div>
         </div>
@@ -47,7 +53,7 @@ export function OutputPanel({ computed, n1Percent, state }) {
               id="out-n1-bar"
               style={{
                 height: '100%',
-                background: 'var(--cyan)',
+                background: '#ffffff',
                 borderRadius: 2,
                 transition: 'width .4s',
                 width: `${n1Percent}%`,
@@ -71,6 +77,12 @@ export function OutputPanel({ computed, n1Percent, state }) {
           />
         </div>
       </div>
+      {computed.overtemp ? (
+        <div className="output-footer-alert">
+          <span>EGT STATUS</span>
+          <strong>{computed.currentTemp} C</strong>
+        </div>
+      ) : null}
     </div>
   );
 }

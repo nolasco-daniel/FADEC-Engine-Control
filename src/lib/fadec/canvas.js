@@ -16,7 +16,7 @@ export class FuelMapRenderer {
     const cw = W - pad.l - pad.r;
     const ch = H - pad.t - pad.b;
 
-    ctx.strokeStyle = 'rgba(0,229,255,0.08)';
+    ctx.strokeStyle = 'rgba(255,255,255,0.12)';
     ctx.lineWidth = 1;
     for (let i = 0; i <= 5; i += 1) {
       const x = pad.l + (i / 5) * cw;
@@ -34,7 +34,7 @@ export class FuelMapRenderer {
     const maxWf = 60;
 
     ctx.font = '8px "Share Tech Mono"';
-    ctx.fillStyle = 'rgba(0,229,255,0.35)';
+    ctx.fillStyle = 'rgba(255,255,255,0.78)';
     ctx.textAlign = 'center';
     for (let i = 0; i <= 5; i += 1) {
       ctx.fillText(i * 20, pad.l + (i / 5) * cw, pad.t + ch + 14);
@@ -46,7 +46,7 @@ export class FuelMapRenderer {
 
     ctx.save();
     ctx.font = '8px "Share Tech Mono"';
-    ctx.fillStyle = 'rgba(0,229,255,0.22)';
+    ctx.fillStyle = 'rgba(255,255,255,0.65)';
     ctx.textAlign = 'center';
     ctx.fillText('Throttle %', pad.l + cw / 2, H - 6);
     ctx.translate(10, pad.t + ch / 2);
@@ -55,9 +55,9 @@ export class FuelMapRenderer {
     ctx.restore();
 
     ctx.beginPath();
-    ctx.strokeStyle = 'rgba(0,229,255,0.6)';
+    ctx.strokeStyle = 'rgba(255,255,255,0.85)';
     ctx.lineWidth = 1.5;
-    ctx.shadowColor = 'rgba(0,229,255,0.4)';
+    ctx.shadowColor = 'rgba(255,255,255,0.35)';
     ctx.shadowBlur = 6;
     ctx.moveTo(pad.l, pad.t + ch);
     ctx.lineTo(pad.l + cw, pad.t);
@@ -69,7 +69,7 @@ export class FuelMapRenderer {
     const px = pad.l + (x / 100) * cw;
     const py = pad.t + ch - (y / maxWf) * ch;
 
-    ctx.strokeStyle = 'rgba(0,229,255,0.25)';
+    ctx.strokeStyle = 'rgba(255,255,255,0.55)';
     ctx.lineWidth = 0.8;
     ctx.setLineDash([3, 3]);
     ctx.beginPath();
@@ -82,8 +82,8 @@ export class FuelMapRenderer {
     ctx.stroke();
     ctx.setLineDash([]);
 
-    ctx.fillStyle = '#00e5ff';
-    ctx.shadowColor = 'rgba(0,229,255,0.8)';
+    ctx.fillStyle = '#ffffff';
+    ctx.shadowColor = 'rgba(255,255,255,0.9)';
     ctx.shadowBlur = 10;
     ctx.beginPath();
     ctx.arc(px, py, 5, 0, Math.PI * 2);

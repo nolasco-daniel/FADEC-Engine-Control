@@ -1,4 +1,5 @@
 import { FeedbackStep, PanelHeader } from '../ui/index.js';
+import { formatInteger } from '../../../lib/fadec/format.js';
 
 export function FeedbackPanel({ computed, state }) {
   return (
@@ -13,7 +14,7 @@ export function FeedbackPanel({ computed, state }) {
           desc='"I added fuel... did the engine speed up?"'
           status={
             computed.overtemp
-              ? 'fuel_flow * 0.0 - MELT-DOWN PREVENTION'
+              ? 'fuel_flow * 0.8 - REDUCING TO PREVENT MELT-DOWN'
               : computed.hightemp
                 ? `Wf: ${computed.wf.toFixed(2)} kg/s - REDUCING`
                 : `fuel_flow = air_volume / 15 = ${computed.wf.toFixed(2)} kg/s`
@@ -28,10 +29,12 @@ export function FeedbackPanel({ computed, state }) {
           desc='"Is it too hot?"'
           status={
             computed.overtemp
-              ? `N1: ${state.n1Actual.toLocaleString()} RPM - ENGINE FAULT`
+              ? `N1: ${formatInteger(state.n1Actual)} RPM - ENGINE FAULT`
+              : state.throttle <= 50
+                ? `N1: ${formatInteger(state.n1Actual)} RPM -> STANDBY / HOLD valve`
               : computed.hightemp
-                ? `N1: ${state.n1Actual.toLocaleString()} RPM -> ${computed.valveCmd} valve`
-                : `N1: ${state.n1Actual.toLocaleString()} vs target ${computed.targetN1.toLocaleString()} -> ${computed.valveCmd} valve`
+                ? `N1: ${formatInteger(state.n1Actual)} RPM -> ${computed.valveCmd} valve`
+                : `N1: ${formatInteger(state.n1Actual)} vs target ${formatInteger(computed.targetN1)} -> ${computed.valveCmd} valve`
           }
         />
         <div className="fb-connector" />
@@ -57,7 +60,7 @@ export function FeedbackPanel({ computed, state }) {
           className={`dg-result ${computed.overtemp ? 'fault' : computed.hightemp ? 'maintain' : 'airworthy'}`}
           id="decision-result"
         >
-          {computed.overtemp ? 'REQUIRES MAINT.' : computed.hightemp ? 'CAUTION' : state.throttle === 0 ? 'STANDBY' : 'AIRWORTHY'}
+          {computed.overtemp ? 'REQUIRES MAINT.' : computed.hightemp ? 'CAUTION' : state.throttle <= 50 ? 'STANDBY' : 'AIRWORTHY'}
         </div>
       </div>
     </div>

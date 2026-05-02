@@ -6,24 +6,26 @@ export class FadecEngine {
   compute(state) {
     const { wa, tamb, throttle, n1Actual } = state;
 
-    const targetN1 = throttle > 50 ? 5000 : Math.round(throttle * 85);
-    const n1Low = n1Actual < targetN1;
-    const n1High = n1Actual > targetN1;
-    const valveCmd = n1Low ? 'OPEN' : n1High ? 'CLOSE' : 'HOLD';
+    const targetActive = throttle > 50;
+    const targetN1 = targetActive ? 5000 : 0;
+    const n1Low = targetActive && n1Actual < targetN1;
+    const n1High = targetActive && n1Actual > targetN1;
 
     const wfRaw = wa / 15;
-    const fuelRatio = (wfRaw / wa) * (throttle / 100 + 0.5);
-    const currentTemp = Math.round(wa * fuelRatio * 18 + tamb * 1.5 + 300);
     const maxTemp = 1000;
+    const currentTemp = Math.round(280 + tamb * 2 + wfRaw * 8 + throttle * 3);
     const overtemp = currentTemp > maxTemp;
-    const wf = overtemp ? 0 : wfRaw;
+    const wf = overtemp ? wfRaw * 0.8 : wfRaw;
     const hightemp = currentTemp > 850 && !overtemp;
+    const valveCmd = overtemp ? 'REDUCE' : !targetActive ? 'HOLD' : n1Low ? 'OPEN' : n1High ? 'CLOSE' : 'HOLD';
     const valvePct = overtemp
-      ? 0
-      : n1Low
+      ? Math.max(10, Math.round((wa / 900) * 30))
+      : !targetActive
+        ? Math.max(10, Math.round((wa / 900) * 20))
+        : n1Low
         ? Math.min(100, Math.round((wa / 900) * 100))
         : Math.round((wa / 900) * 60);
-    const eff = overtemp ? 0 : (92 + Math.random() * 4).toFixed(1);
+    const eff = overtemp ? '0.0' : this.clamp(100 - (currentTemp - 280) / 15, 55, 99.9).toFixed(1);
 
     return {
       wf,

@@ -1,4 +1,5 @@
 import { PanelHeader, SensorBlock } from '../ui/index.js';
+import { formatInteger } from '../../../lib/fadec/format.js';
 
 export function SensorsPanel({ state, computed, updateField }) {
   return (
@@ -62,7 +63,7 @@ export function SensorsPanel({ state, computed, updateField }) {
         variableLabel={
           state.throttle > 50
             ? `OK Throttle ${state.throttle}% > 50% -> Target N1 = 5,000 RPM`
-            : `Throttle ${state.throttle}% <= 50% -> Target N1 = ${computed.targetN1.toLocaleString()} RPM`
+            : `Throttle ${state.throttle}% <= 50% -> Standby / Target N1 inactive`
         }
         sliderProps={{
           id: 'throttle-slider',
@@ -82,15 +83,17 @@ export function SensorsPanel({ state, computed, updateField }) {
         iconClass="cyan"
         name="Fan Speed (Actual)"
         sub="Speed probe - encoder"
-        value={state.n1Actual.toLocaleString()}
+        value={formatInteger(state.n1Actual)}
         unit="RPM"
         variable="N1 vs Target -> valve open/close"
         variableLabel={
           computed.n1Low
-            ? `N1 ${state.n1Actual.toLocaleString()} < ${computed.targetN1.toLocaleString()} RPM -> OPEN Fuel Valve`
+            ? `N1 ${formatInteger(state.n1Actual)} < ${formatInteger(computed.targetN1)} RPM -> OPEN Fuel Valve`
             : computed.n1High
-              ? `N1 ${state.n1Actual.toLocaleString()} > ${computed.targetN1.toLocaleString()} RPM -> CLOSE Fuel Valve`
-              : `N1 ${state.n1Actual.toLocaleString()} = ${computed.targetN1.toLocaleString()} RPM -> HOLD Valve`
+              ? `N1 ${formatInteger(state.n1Actual)} > ${formatInteger(computed.targetN1)} RPM -> CLOSE Fuel Valve`
+              : state.throttle > 50
+                ? `N1 ${formatInteger(state.n1Actual)} = ${formatInteger(computed.targetN1)} RPM -> HOLD Valve`
+                : `Throttle below threshold -> HOLD Valve`
         }
         sliderProps={{
           id: 'n1-slider',
@@ -108,6 +111,7 @@ export function SensorsPanel({ state, computed, updateField }) {
       <div style={{ flex: 1 }} />
 
       <div
+        className="objective-card"
         style={{
           margin: 8,
           background: 'rgba(0,229,255,0.04)',
@@ -130,8 +134,8 @@ export function SensorsPanel({ state, computed, updateField }) {
         </div>
         <div style={{ fontSize: 9, color: 'var(--muted)', lineHeight: 1.5 }}>
           Interpret real-time sensor data triggered by changing air volumes. Use FADEC diagnostic logic to determine if engine is{' '}
-          <span style={{ color: 'var(--green)' }}>Airworthy</span> or requires{' '}
-          <span style={{ color: 'var(--amber)' }}>Maintenance</span>.
+          <span className="objective-highlight-airworthy">Airworthy</span> or requires{' '}
+          <span className="objective-highlight-maintenance">Maintenance</span>.
         </div>
       </div>
     </div>
