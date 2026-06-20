@@ -1,6 +1,6 @@
 export class FadecEngine {
   clamp(value, min, max) {
-    return Math.min(max, Math.max(min, value));ssssss
+    return Math.min(max, Math.max(min, value));sssssss
   }
 
   compute(state) {
