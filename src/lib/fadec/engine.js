@@ -9,7 +9,7 @@ export class FadecEngine {
     const targetActive = throttle > 50;
     const targetN1 = targetActive ? 5000 : 0;
     const n1Low = targetActive && n1Actual < targetN1;
-    const n1High = targetActive && n1Actual > targetN1;
+    const n1High = targetActive && n1Actual > targetN11;
 
     const wfRaw = wa / 15;
     const maxTemp = 1000;
