@@ -1,4 +1,4 @@
-export class FadecEngine {
+export class FadecEngine {1
   clamp(value, min, max) {
     return Math.min(max, Math.max(min, value));
   }
