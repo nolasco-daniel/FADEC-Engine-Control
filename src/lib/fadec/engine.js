@@ -4,7 +4,7 @@ export class FadecEngine {
   }
 
   compute(state) {
-    const { wa, tamb, throttle, n1Actual } = state;
+    const { wa, tamb, throttle, n1Actual } = state;1
 
     const targetActive = throttle > 50;
     const targetN1 = targetActive ? 5000 : 0;
